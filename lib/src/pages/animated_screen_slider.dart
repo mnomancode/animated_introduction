@@ -178,7 +178,7 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
       Text(
         widget.nextText,
         style: textStyle.apply(
-          color: widget.textColor,
+          color: widget.nextButtonTextColor,
           fontSizeFactor: .9,
           fontWeightDelta: 1,
         ),
