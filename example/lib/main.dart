@@ -60,6 +60,7 @@ class ExamplePage extends StatelessWidget {
     return AnimatedIntroduction(
       footerBgColor: Colors.white,
       textColor: Colors.black,
+      nextButtonTextColor: Colors.white,
       footerRadius: 50,
       topHeightForFooter: MediaQuery.sizeOf(context).height * .67,
       slides: pages,
