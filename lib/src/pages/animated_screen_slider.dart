@@ -37,6 +37,10 @@ class AnimatedIntroduction extends StatefulWidget {
   ///[List<IntroScreen>]
   final List<SingleIntroScreen> slides;
 
+  /// background gradient color for your slide header
+  /// [Gradient]
+  final Gradient? gradient;
+
   ///sets the skip widget, the one used to skip to the final screen
   ///[Widget]
   final Widget? skipWidget;
@@ -121,6 +125,7 @@ class AnimatedIntroduction extends StatefulWidget {
     this.footerBgColor = const Color(0xff51adf6),
     this.topHeightForFooter,
     this.isFullScreen = false,
+    this.gradient,
   }) : assert(slides.length > 0);
 }
 
@@ -176,14 +181,14 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
 
   Widget get skip =>
       widget.skipWidget ??
-          Text(
-            widget.skipText,
-            style: textStyle.apply(
-              color: widget.textColor,
-              fontSizeFactor: .9,
-              fontWeightDelta: 1,
-            ),
-          );
+      Text(
+        widget.skipText,
+        style: textStyle.apply(
+          color: widget.textColor,
+          fontSizeFactor: .9,
+          fontWeightDelta: 1,
+        ),
+      );
 
   Widget get done =>
       widget.doneWidget ??
@@ -219,6 +224,29 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IgnorePointer(
+              ignoring: lastPage,
+              child: Opacity(
+                opacity: lastPage ? 0.0 : 1.0,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(100),
+                    onTap: onSkip,
+                    child: skip,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+      extendBodyBehindAppBar: true,
       body: AnnotatedRegion<SystemUiOverlayStyle>(
         value: SystemUiOverlayStyle(
           statusBarColor: currentScreen?.headerBgColor?.withOpacity(.8) ?? Colors.transparent,
@@ -226,8 +254,11 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
           systemNavigationBarColor: widget.isFullScreen ? gradients.colors.first : null,
         ),
         child: Container(
-          color: widget.containerBg,
           width: double.infinity,
+          decoration: BoxDecoration(
+            color: widget.containerBg,
+            gradient: widget.gradient,
+          ),
           child: Stack(
             clipBehavior: Clip.none,
             children: <Widget>[
@@ -286,7 +317,7 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
                       topLeft: Radius.circular(widget.footerRadius.toDouble()),
                     ),
                     color: widget.footerBgColor,
-                    gradient: gradients,
+                    // gradient: gradients,
                   ),
                   child: Align(
                     alignment: Alignment.topCenter,
@@ -330,70 +361,84 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
                 bottom: 16,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
-                  child: SizedBox(
-                    width: double.infinity,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        IgnorePointer(
-                          ignoring: lastPage,
-                          child: Opacity(
-                            opacity: lastPage ? 0.0 : 1.0,
-                            child: Material(
-                              type: MaterialType.transparency,
-                              child: InkWell(
-                                borderRadius: BorderRadius.circular(100),
-                                onTap: onSkip,
-                                child: skip,
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: SizedBox(
-                            width: 160,
-                            child: PageIndicator(
-                              type: widget.indicatorType,
-                              currentIndex: currentPage,
-                              activeDotColor: widget.activeDotColor,
-                              inactiveDotColor: widget.inactiveDotColor ?? widget.activeDotColor.withOpacity(.5),
-                              pageCount: widget.slides.length,
-                              onTap: () {
-                                _controller!.animateTo(
-                                  _controller!.page!,
-                                  duration: const Duration(
-                                    milliseconds: 400,
-                                  ),
-                                  curve: Curves.fastOutSlowIn,
-                                );
-                              },
-                            ),
-                          ),
-                        ),
-                        Material(
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(100),
-                          ),
-                          type: MaterialType.transparency,
-                          child: lastPage
-                              ? InkWell(
-                                  borderRadius: BorderRadius.circular(100),
-                                  onTap: widget.onDone as void Function()?,
-                                  child: done,
-                                )
-                              : InkWell(
-                                  borderRadius: BorderRadius.circular(100),
-                                  child: next,
-                                  onTap: () => _controller!.nextPage(
-                                    duration: const Duration(milliseconds: 800),
-                                    curve: Curves.fastOutSlowIn,
-                                  ),
-                                ),
+                  child: lastPage
+                      ? ElevatedButton(
+                          // borderRadius: BorderRadius.circular(100),
+                          onPressed: widget.onDone as void Function()?,
+                          child: done,
                         )
-                      ],
-                    ),
-                  ),
+                      : ElevatedButton(
+                          // borderRadius: BorderRadius.circular(100),
+                          child: next,
+                          onPressed: () => _controller!.nextPage(
+                            duration: const Duration(milliseconds: 800),
+                            curve: Curves.fastOutSlowIn,
+                          ),
+                        ),
+                  // SizedBox(
+                  //   width: double.infinity,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     children: <Widget>[
+                  //       IgnorePointer(
+                  //         ignoring: lastPage,
+                  //         child: Opacity(
+                  //           opacity: lastPage ? 0.0 : 1.0,
+                  //           child: Material(
+                  //             type: MaterialType.transparency,
+                  //             child: InkWell(
+                  //               borderRadius: BorderRadius.circular(100),
+                  //               onTap: onSkip,
+                  //               child: skip,
+                  //             ),
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Expanded(
+                  //         child: SizedBox(
+                  //           width: 160,
+                  //           child: PageIndicator(
+                  //             type: widget.indicatorType,
+                  //             currentIndex: currentPage,
+                  //             activeDotColor: widget.activeDotColor,
+                  //             inactiveDotColor: widget.inactiveDotColor ?? widget.activeDotColor.withOpacity(.5),
+                  //             pageCount: widget.slides.length,
+                  //             onTap: () {
+                  //               _controller!.animateTo(
+                  //                 _controller!.page!,
+                  //                 duration: const Duration(
+                  //                   milliseconds: 400,
+                  //                 ),
+                  //                 curve: Curves.fastOutSlowIn,
+                  //               );
+                  //             },
+                  //           ),
+                  //         ),
+                  //       ),
+                  //       Material(
+                  //         clipBehavior: Clip.antiAlias,
+                  //         shape: RoundedRectangleBorder(
+                  //           borderRadius: BorderRadius.circular(100),
+                  //         ),
+                  //         type: MaterialType.transparency,
+                  //         child: lastPage
+                  //             ? InkWell(
+                  //                 borderRadius: BorderRadius.circular(100),
+                  //                 onTap: widget.onDone as void Function()?,
+                  //                 child: done,
+                  //               )
+                  //             : InkWell(
+                  //                 borderRadius: BorderRadius.circular(100),
+                  //                 child: next,
+                  //                 onTap: () => _controller!.nextPage(
+                  //                   duration: const Duration(milliseconds: 800),
+                  //                   curve: Curves.fastOutSlowIn,
+                  //                 ),
+                  //               ),
+                  //       )
+                  //     ],
+                  //   ),
+                  // ),
                 ),
               ),
             ],

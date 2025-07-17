@@ -46,64 +46,64 @@ class ImageWithBubble extends StatelessWidget {
       alignment: Alignment.center,
       children: [
         /// main big circle avatar
-        CircleAvatar(
-          radius: ballRadius,
-          backgroundColor: cardBgColor.withOpacity(0.6),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.03,
-          child: CircleAvatar(
-            radius: 6,
-            backgroundColor: dotBgColor,
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.08,
-          top: MediaQuery.sizeOf(context).height * 0.2,
-          child: CircleAvatar(
-            radius: 2,
-            backgroundColor: dotBgColor,
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.1,
-          top: MediaQuery.sizeOf(context).height * 0.1,
-          child: CircleAvatar(
-            radius: 4,
-            backgroundColor: dotBgColor,
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.3,
-          top: -MediaQuery.sizeOf(context).height * 0.033,
-          child: CircleAvatar(
-            radius: 12,
-            backgroundColor: dotBgColor,
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.7,
-          top: 0,
-          child: CircleAvatar(
-            radius: 3,
-            backgroundColor: dotBgColor,
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.86,
-          top: MediaQuery.sizeOf(context).height * 0.1,
-          child: CircleAvatar(
-            radius: 7,
-            backgroundColor: dotBgColor,
-          ),
-        ),
-        Positioned(
-          left: MediaQuery.sizeOf(context).width * 0.92,
-          child: CircleAvatar(
-            radius: 2,
-            backgroundColor: dotBgColor,
-          ),
-        ),
+        // CircleAvatar(
+        //   radius: ballRadius,
+        //   backgroundColor: cardBgColor.withOpacity(0.6),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.03,
+        //   child: CircleAvatar(
+        //     radius: 6,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.08,
+        //   top: MediaQuery.sizeOf(context).height * 0.2,
+        //   child: CircleAvatar(
+        //     radius: 2,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.1,
+        //   top: MediaQuery.sizeOf(context).height * 0.1,
+        //   child: CircleAvatar(
+        //     radius: 4,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.3,
+        //   top: -MediaQuery.sizeOf(context).height * 0.033,
+        //   child: CircleAvatar(
+        //     radius: 12,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.7,
+        //   top: 0,
+        //   child: CircleAvatar(
+        //     radius: 3,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.86,
+        //   top: MediaQuery.sizeOf(context).height * 0.1,
+        //   child: CircleAvatar(
+        //     radius: 7,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
+        // Positioned(
+        //   left: MediaQuery.sizeOf(context).width * 0.92,
+        //   child: CircleAvatar(
+        //     radius: 2,
+        //     backgroundColor: dotBgColor,
+        //   ),
+        // ),
         if (imageAsset != null)
           Image.asset(
             imageAsset!,

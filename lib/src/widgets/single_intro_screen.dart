@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 import 'image_with_bubble.dart';
 
@@ -15,6 +16,10 @@ class SingleIntroScreen extends StatelessWidget {
   ///[String]
   final String? imageAsset;
 
+  /// svg image path for your slide
+  /// [String]
+  final String? svgImageAsset;
+
   ///image path from network
   ///[String]
   final String? imageNetwork;
@@ -26,6 +31,10 @@ class SingleIntroScreen extends StatelessWidget {
   ///background color for your slide header
   ///[Color]
   final Color? headerBgColor;
+
+  /// background gradient color for your slide header
+  /// [Gradient]
+  final Gradient? gradient;
 
   ///padding for the your slide header
   ///[EdgeInsets]
@@ -70,6 +79,8 @@ class SingleIntroScreen extends StatelessWidget {
     this.imageWithBubble = true,
     this.centerBallRadius,
     this.imageNetwork,
+    this.svgImageAsset,
+    this.gradient,
   });
 
   @override
@@ -80,52 +91,83 @@ class SingleIntroScreen extends StatelessWidget {
       height: screenSize.height,
       child: Column(
         children: <Widget>[
-          Container(
-            height: screenSize.height * .8,
-            padding: slidePagePadding,
-            decoration: BoxDecoration(color: headerBgColor),
-            child: Center(
-              child: imageAsset != null || imageNetwork != null
-                  ? imageWithBubble
-                      ? ImageWithBubble(
-                          cardBgColor: mainCircleBgColor,
-                          dotBgColor: sideDotsBgColor,
-                          imageAsset: imageAsset,
-                          imageNetwork: imageNetwork,
-                          imageHeightMultiple: imageHeightMultiple,
-                          ballRadius: centerBallRadius ?? screenSize.width * 0.3,
-                        )
-                      : imageAsset != null
-                          ? Image.asset(
-                              imageAsset!,
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: screenSize.height * imageHeightMultiple,
+          Stack(
+            alignment: Alignment.center,
+            children: [
+              if (svgImageAsset != null)
+                Positioned(
+                  // bottom: -screenSize.height * .26,
+                  top: screenSize.height * .46,
+                  right: 0,
+                  left: 0,
+                  child: SvgPicture.asset(
+                    svgImageAsset!,
+                    height: screenSize.height * .6,
+                    width: double.infinity,
+                    fit: BoxFit.fill,
+                    color: const Color(0xFFF3F4F6).withOpacity(0.3),
+                  ),
+                ),
+              Container(
+                height: screenSize.height * .8,
+                padding: slidePagePadding,
+                decoration: BoxDecoration(
+                  color: headerBgColor,
+                ),
+                child: Center(
+                  child: imageAsset != null || imageNetwork != null
+                      ? imageWithBubble
+                          ? ImageWithBubble(
+                              cardBgColor: mainCircleBgColor,
+                              dotBgColor: sideDotsBgColor,
+                              imageAsset: imageAsset,
+                              imageNetwork: imageNetwork,
+                              imageHeightMultiple: imageHeightMultiple,
+                              ballRadius: centerBallRadius ?? screenSize.width * 0.3,
                             )
-                          : Image.network(
-                              imageNetwork!,
-                              fit: BoxFit.contain,
-                              width: double.infinity,
-                              height: screenSize.height * imageHeightMultiple,
-                              errorBuilder: (context, error, stackTrace) {
-                                return const Center(child: Icon(Icons.error));
-                              },
-                              loadingBuilder: (context, child, loadingProgress) {
-                                if (loadingProgress == null) return child;
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              },
-                            )
-                  : headerWidget ??
-                      Text(
-                        "Header Widgets",
-                        style: textStyle?.apply(
-                          fontSizeDelta: 2,
-                          fontWeightDelta: 3,
-                        ),
-                      ),
-            ),
+                          : imageAsset != null
+                              ? Image.asset(
+                                  imageAsset!,
+                                  fit: BoxFit.contain,
+                                  width: double.infinity,
+                                  height: screenSize.height * imageHeightMultiple,
+                                )
+                              : Image.network(
+                                  imageNetwork!,
+                                  fit: BoxFit.contain,
+                                  width: double.infinity,
+                                  height: screenSize.height * imageHeightMultiple,
+                                  errorBuilder: (context, error, stackTrace) {
+                                    return const Center(child: Icon(Icons.error));
+                                  },
+                                  loadingBuilder: (context, child, loadingProgress) {
+                                    if (loadingProgress == null) return child;
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  },
+                                )
+                      : headerWidget ??
+                          Text(
+                            "Header Widgets",
+                            style: textStyle?.apply(
+                              fontSizeDelta: 2,
+                              fontWeightDelta: 3,
+                            ),
+                          ),
+                ),
+              ),
+
+              // Positioned(
+              //     top: screenSize.height * .5,
+              //     right: 0,
+              //     left: 0,
+              //     child: SvgPicture.asset(
+              //       'assets/splash bg 2.svg',
+              //       height: screenSize.height * .6,
+              //       color: const Color(0xFFF3F4F6).withOpacity(0.3),
+              //     )),
+            ],
           ),
         ],
       ),
