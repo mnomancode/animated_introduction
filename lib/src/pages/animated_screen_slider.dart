@@ -324,7 +324,7 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
                     child: SingleChildScrollView(
                       child: Column(
                         children: <Widget>[
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 20),
                           Text(
                             currentScreen!.title!,
                             softWrap: true,
@@ -332,12 +332,13 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
                             overflow: TextOverflow.ellipsis,
                             style: textStyle.apply(
                               color: widget.textColor,
-                              fontWeightDelta: 1,
-                              fontSizeDelta: 8,
+                              fontWeightDelta: 4,
+                              fontSizeDelta: 16,
+                              heightDelta: -0.5, // Decreased line spacing
                             ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                           ),
-                          const SizedBox(height: 10),
+                          const SizedBox(height: 16),
                           Text(
                             currentScreen!.description!,
                             softWrap: true,
@@ -345,7 +346,7 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
                               color: widget.textColor,
                               fontSizeFactor: .9,
                             ),
-                            textAlign: TextAlign.center,
+                            textAlign: TextAlign.start,
                           ),
                           const SizedBox(height: 20),
                         ],
@@ -358,7 +359,7 @@ class AnimatedIntroductionState extends State<AnimatedIntroduction> with TickerP
               Positioned(
                 left: 0,
                 right: 0,
-                bottom: 16,
+                bottom: 40,
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
                   child: lastPage

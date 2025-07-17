@@ -26,23 +26,26 @@ class MyApp extends StatelessWidget {
 
 /// List of pages to be shown in the introduction
 ///
-final List<SingleIntroScreen> pages = [
-  const SingleIntroScreen(
-    title: 'Welcome to the Event Management App !',
-    description: 'You plans your Events, We\'ll do the rest and will be the best! Guaranteed!  ',
+const List<SingleIntroScreen> pages = [
+  SingleIntroScreen(
+    title: 'Recommendations You Can Rely On',
+    description: 'Get trusted advice from the people who know you best. Your family, friends, and inner circle.',
     imageAsset: 'assets/onboard_three.png',
     imageHeightMultiple: 0.42,
     svgImageAsset: 'assets/splash bg 1.svg',
   ),
-  const SingleIntroScreen(
-    title: 'Book tickets to cricket matches and events',
-    description: 'Tickets to the latest movies, crickets matches, concerts, comedy shows, plus lots more !',
+  SingleIntroScreen(
+    title: 'Create Circles That Reflect Your Life',
+    description:
+        'Easily group your contacts into Family, Friends, and Custom Circles to keep recommendations relevant and personal.',
     imageAsset: 'assets/onboard_two.png',
     svgImageAsset: 'assets/splash bg 2.svg',
   ),
-  const SingleIntroScreen(
-    title: 'Grabs all events now only in your hands',
-    description: 'All events are now in your hands, just a click away ! ',
+  SingleIntroScreen(
+    title: 'AI-Powered, But Circle-First',
+    description: 'Use smart search and suggestions powered by your trusted circles, never strangers.',
+    centerBallRadius: 0,
+    sideDotsBgColor: Colors.white,
     imageAsset: 'assets/onboard_one.png',
     svgImageAsset: 'assets/splash bg 3.svg',
   ),
@@ -63,15 +66,15 @@ class ExamplePage extends StatelessWidget {
       indicatorType: IndicatorType.circle,
       activeDotColor: Colors.blue,
       inactiveDotColor: Colors.grey,
-      gradient: LinearGradient(
+      gradient: RadialGradient(
         colors: [
-          const Color.fromARGB(255, 198, 222, 241),
-          // Colors.red,
+          const Color(0xFF2B7FFF),
           Colors.grey.shade300,
         ],
-        stops: const [0.0, 0.5],
-        begin: Alignment.bottomCenter,
-        end: Alignment.topRight,
+        stops: const [0.0, 0.9],
+        center: Alignment.bottomCenter,
+        radius: 1.3,
+        focal: Alignment.bottomLeft,
       ),
       onDone: () {
         /// TODO: Go to desire page like login or home
