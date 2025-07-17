@@ -81,6 +81,10 @@ class AnimatedIntroduction extends StatefulWidget {
   ///[Color]
   final Color textColor;
 
+  ///sets next button text color
+  ///[Color]
+  final Color nextButtonTextColor;
+
   ///sets the colors of the gradient for the footer widget of your slides
   ///[List<Color>]
   final List<Color> footerGradients;
@@ -126,6 +130,7 @@ class AnimatedIntroduction extends StatefulWidget {
     this.topHeightForFooter,
     this.isFullScreen = false,
     this.gradient,
+    this.nextButtonTextColor = Colors.white,
   }) : assert(slides.length > 0);
 }
 
